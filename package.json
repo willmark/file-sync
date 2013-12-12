@@ -14,7 +14,9 @@
   "engine": {
     "node": "0"
   },
-  "dependencies": {},
+  "dependencies": {
+    "file-compare": "~0.0.1"
+  },
   "devDependencies": {
     "grunt": "~0.4.2",
     "grunt-preprocess": "~3.0.1",

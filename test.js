@@ -1,26 +1,62 @@
-exports.tests = function(a) {
-    comparator = require("./index");
+copier = require("./index");
+
+exports.noArgsFails = function(a) {
+    a.expect(1);
     a.throws(function() {
-        comparator.compare();
+        copier.sync();
     }, "OK");
-    a.throws(function() {
-        comparator.compare("./file1", "./file1");
-    });
-    a.throws(function() {
-        comparator.compare("./file1", "./file1", "aaa", function() {});
-    }, /Digest method not supported/);
-    a.throws(function() {
-        comparator.compare("./file1", "./file1", "sha1", "badcallback");
-    }, /Callback required/);
-    a.throws(function() {
-        comparator.compare("./file1", "./file1", "hhh", "bbb", "ccc");
-    }, /Invalid args length: 5/);
-    comparator.compare("./file1", "./file1", function(result) {
-        a.ok(result);
-    });
-    comparator.compare("./file1", "./file2", function(result) {
-        a.ok(!result);
-    });
-    console.log("Passed " + module.id);
     a.done();
+};
+
+exports.noCallbackFails = function(a) {
+    copier = require("./index");
+    a.expect(1);
+    a.throws(function() {
+        copier.sync("./file1", "./file1");
+    });
+    a.done();
+};
+
+exports.badDigestFails = function(a) {
+    copier = require("./index");
+    a.expect(1);
+    a.throws(function() {
+        copier.sync("./file1", "./file1", "aaa", function() {});
+    }, /Digest method not supported/);
+    a.done();
+};
+
+exports.badCallbackFails = function(a) {
+    copier = require("./index");
+    a.expect(1);
+    a.throws(function() {
+        copier.sync("./file1", "./file1", "sha1", "badcallback");
+    }, /Callback required/);
+    a.done();
+};
+
+exports.invalidArgsFails = function(a) {
+    copier = require("./index");
+    a.expect(1);
+    a.throws(function() {
+        copier.sync("./file1", "./file1", "hhh", "bbb", "ccc");
+    }, /Invalid args length: 5/);
+    a.done();
+};
+
+exports.filesSameNoCopy = function(a) {
+    copier = require("./index");
+    a.expect(1);
+    copier.sync("./file1", "./file1", function(result, err) {
+        a.ok(!result);
+        a.done();
+    });
+};
+
+exports.filesDifferCopy = function(a) {
+    a.expect(1);
+    copier.sync("./file1", "./file2", function(result, err) {
+        a.ok(result);
+        a.done();
+    });
 };
