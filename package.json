@@ -1,0 +1,32 @@
+{
+  "name": "file-sync",
+  "version": "0.0.1",
+  "description": "Synchronize two files based on hash differences",
+  "homepage": "https://github.com/willmark/file-sync",
+  "author": {
+    "name": "Mark Williams",
+    "email": "mark@togglebit.org",
+    "url": "http://togglebit.org/"
+  },
+  "scripts": {
+    "test": "node test.js"
+  },
+  "engine": {
+    "node": "0"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "grunt": "~0.4.2",
+    "grunt-preprocess": "~3.0.1",
+    "grunt-contrib-uglify": "~0.2.7",
+    "grunt-contrib-jshint": "~0.7.2",
+    "grunt-contrib-nodeunit": "~0.2.2"
+  },
+  "keywords": [
+    "hash",
+    "copy",
+    "sync",
+    "file copy"
+  ],
+  "readmeFilename": "README.md"
+}
