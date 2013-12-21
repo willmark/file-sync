@@ -40,7 +40,7 @@ exports.invalidArgsFails = function(a) {
     a.expect(1);
     a.throws(function() {
         copier.sync("./file1", "./file1", "hhh", "bbb", "ccc");
-    }, /Invalid args length: 5/);
+    }, /Callback required/);
     a.done();
 };
 
@@ -48,6 +48,15 @@ exports.filesSameNoCopy = function(a) {
     copier = require("./index");
     a.expect(1);
     copier.sync("./file1", "./file1", function(result, err) {
+        a.ok(!result);
+        a.done();
+    });
+};
+
+exports.srcFileNotExist = function(a) {
+    copier = require("./index");
+    a.expect(1);
+    copier.sync("./fileNoFile1", "./file1", function(result, err) {
         a.ok(!result);
         a.done();
     });

@@ -8,9 +8,9 @@
     "email": "mark@togglebit.org",
     "url": "http://togglebit.org/"
   },
-  "repository" : {
-    "type" : "git",
-    "url" : "https://github.com/willmark/file-sync.git"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/willmark/file-sync.git"
   },
   "scripts": {
     "test": "node test.js"
@@ -19,7 +19,8 @@
     "node": "0"
   },
   "dependencies": {
-    "file-compare": "~0.0.1"
+    "file-compare": "~0.0.1",
+    "vargs": "~0.1.0"
   },
   "devDependencies": {
     "grunt": "~0.4.2",

@@ -1,24 +1,39 @@
+/**
+ * Sync two files base on their computed hash rather than just size or timestamp
+ * usage: sync(file1, file2, [algo], callback);
+ * where:
+ *    file1 - required string path to file 1
+ *    file2 - required string path to file 2
+ *    algo - option string algorithm for hash computation
+ *    callback - required callaback(copied, err)
+ *    where: 
+ *       copied - boolean indicating if copy succeeded
+ *       err - Error if there was a problem with the copy
+ */
 exports.sync = function() {
-    if (typeof arguments[0] === "undefined") throw new Error("File1 required");
-    if (typeof arguments[1] === "undefined") throw new Error("File2 required");
-    if (typeof arguments[2] === "undefined") throw new Error("Callback required");
-    var file1 = arguments[0];
-    var file2 = arguments[1];
-    var algo = "sha1";
-    var callback = arguments[2];
-    if (typeof arguments[0] != "string") throw new Error("File1 must be a string");
-    if (typeof arguments[1] != "string") throw new Error("File2 must be a string");
-    if (arguments.length == 4) {
-        if (typeof arguments[2] != "string") throw new Error("Algorithm must be a string");
-        if (typeof arguments[3] != "function") throw new Error("Callback required");
-        algo = arguments[2];
-        callback = arguments[3];
-    } else if (arguments.length == 3) {
-        if (typeof arguments[2] != "function") throw new Error("Callback required");
-    } else {
-        throw new Error("Invalid args length: " + arguments.length);
-    }
+    var Args = require("vargs").Constructor;
 
+    /**
+     * Common argument checking for crop and resize
+     */
+    function checkCommonArgs(args) {
+        if (args.length < 2) throw new Error("File1, File2, and callback required");
+        if (typeof args.at(1) != "string") throw new Error("File2 required");
+        if (typeof args.at(0) != "string") throw new Error("File1 required");
+        if (!args.callbackGiven()) throw new Error("Callback required");
+    }
+    var args = new Args(arguments);
+    checkCommonArgs(args);
+    var file1 = args.at(0);
+    var file2 = args.at(1);
+    var algo = "sha1";
+    var callback = args.callback;
+    if (args.length === 3) {
+        if (typeof args.at(2) !== "string") throw new Error("Algorithm must be a string");
+        algo = args.at(2);
+    } else if (args.length > 3) {
+        throw new Error("Invalid args length: " + args.length);
+    }
     ch = require("file-compare");
     ch.compare(file1, file2, algo, function(filesSame, err) {
         if (!filesSame && !err) {
@@ -29,7 +44,6 @@ exports.sync = function() {
             callback(false, err);
         }
     });
-
     /**
      * Copy file1 to file2
      */
@@ -46,4 +60,3 @@ exports.sync = function() {
         });
     }
 };
-
