@@ -34,7 +34,7 @@ exports.sync = function() {
     } else if (args.length > 3) {
         throw new Error("Invalid args length: " + args.length);
     }
-    ch = require("file-compare");
+    var ch = require("file-compare");
     ch.compare(file1, file2, algo, function(filesSame, err) {
         if (!filesSame && !err) {
             copyFiles(file1, file2, function(filesCopied, err) {

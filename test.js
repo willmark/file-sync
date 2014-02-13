@@ -1,6 +1,6 @@
-copier = require("./index");
 
 exports.noArgsFails = function(a) {
+    var copier = require("./index");
     a.expect(1);
     a.throws(function() {
         copier.sync();
@@ -9,7 +9,7 @@ exports.noArgsFails = function(a) {
 };
 
 exports.noCallbackFails = function(a) {
-    copier = require("./index");
+    var copier = require("./index");
     a.expect(1);
     a.throws(function() {
         copier.sync("./file1", "./file1");
@@ -18,7 +18,7 @@ exports.noCallbackFails = function(a) {
 };
 
 exports.badDigestFails = function(a) {
-    copier = require("./index");
+    var copier = require("./index");
     a.expect(1);
     a.throws(function() {
         copier.sync("./file1", "./file1", "aaa", function() {});
@@ -27,7 +27,7 @@ exports.badDigestFails = function(a) {
 };
 
 exports.badCallbackFails = function(a) {
-    copier = require("./index");
+    var copier = require("./index");
     a.expect(1);
     a.throws(function() {
         copier.sync("./file1", "./file1", "sha1", "badcallback");
@@ -36,7 +36,7 @@ exports.badCallbackFails = function(a) {
 };
 
 exports.invalidArgsFails = function(a) {
-    copier = require("./index");
+    var copier = require("./index");
     a.expect(1);
     a.throws(function() {
         copier.sync("./file1", "./file1", "hhh", "bbb", "ccc");
@@ -45,7 +45,7 @@ exports.invalidArgsFails = function(a) {
 };
 
 exports.filesSameNoCopy = function(a) {
-    copier = require("./index");
+    var copier = require("./index");
     a.expect(1);
     copier.sync("./file1", "./file1", function(result, err) {
         a.ok(!result);
@@ -54,7 +54,7 @@ exports.filesSameNoCopy = function(a) {
 };
 
 exports.srcFileNotExist = function(a) {
-    copier = require("./index");
+    var copier = require("./index");
     a.expect(1);
     copier.sync("./fileNoFile1", "./file1", function(result, err) {
         a.ok(!result);
@@ -63,6 +63,7 @@ exports.srcFileNotExist = function(a) {
 };
 
 exports.filesDifferCopy = function(a) {
+    var copier = require("./index");
     a.expect(1);
     copier.sync("./file1", "./file2", function(result, err) {
         a.ok(result);
